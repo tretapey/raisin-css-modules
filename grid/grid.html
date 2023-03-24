@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom CSS Grid System Examples</title>
+    <link rel="stylesheet" href="./grid.css" />
+    <style>
+      .grid-item {
+        border: 1px solid #ccc;
+        background-color: lightblue;
+        padding: 1rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Example 1: A responsive 2-column layout</h2>
+    <div class="grid grid-cols-1@sm grid-cols-2@md grid-gap-4">
+      <div class="grid-item">Column 1</div>
+      <div class="grid-item">Column 2</div>
+    </div>
+
+    <h2>Example 2: A responsive 3-column layout with different gaps</h2>
+    <div class="grid grid-cols-1@sm grid-cols-3@md col-gap-2 row-gap-4">
+      <div class="grid-item">Column 1</div>
+      <div class="grid-item">Column 2</div>
+      <div class="grid-item">Column 3</div>
+    </div>
+
+    <h2>
+      Example 3: A grid with different column spans at different breakpoints
+    </h2>
+    <div class="grid grid-cols-3 grid-gap-4">
+      <div class="grid-item col-start-1 col-end-3@sm col-end-2@md">
+        Column 1
+      </div>
+      <div class="grid-item col-start-3 col-end-4@sm col-end-3@md">
+        Column 2
+      </div>
+      <div class="grid-item col-start-1 col-end-4@sm col-end-4@md">
+        Column 3
+      </div>
+    </div>
+
+    <h2>Example 4: A grid with item alignment and content alignment</h2>
+    <div
+      class="grid grid-cols-2 grid-rows-2 grid-gap-4 align-items-center justify-content-between"
+    >
+      <div class="grid-item align-self-start justify-self-start">Top-left</div>
+      <div class="grid-item align-self-end justify-self-end">Bottom-right</div>
+      <div class="grid-item align-self-center justify-self-center">Center</div>
+      <div class="grid-item">Center</div>
+    </div>
+  </body>
+</html>

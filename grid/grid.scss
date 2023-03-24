@@ -1,0 +1,147 @@
+// Configurable variables
+$grid-steps: 12;
+$gap-sizes: (
+  "0": 0,
+  "1": 0.25rem,
+  "2": 0.5rem,
+  "3": 0.75rem,
+  "4": 1rem,
+  "5": 1.25rem,
+  "6": 1.5rem,
+  "7": 1.75rem,
+  "8": 2rem,
+);
+$item-alignment-values: (
+  "start": start,
+  "end": end,
+  "center": center,
+  "baseline": baseline,
+  "stretch": stretch,
+);
+$content-alignment-values: (
+  "start": start,
+  "end": end,
+  "center": center,
+  "between": space-between,
+  "around": space-around,
+  "evenly": space-evenly,
+);
+$breakpoints: (
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+);
+
+// Mixin for generating responsive classes
+@mixin generate-responsive-classes($class-name, $property, $values) {
+  @each $value-name, $value in $values {
+    .#{$class-name}-#{$value-name} {
+      #{$property}: $value;
+    }
+
+    @each $bp-name, $bp-value in $breakpoints {
+      @media screen and (min-width: $bp-value) {
+        .#{$class-name}-#{$value-name}\@#{$bp-name} {
+          #{$property}: $value;
+        }
+      }
+    }
+  }
+}
+
+// Grid container classes
+.grid {
+  display: grid;
+}
+
+$grid-cols-rows: ();
+@for $i from 1 through $grid-steps {
+  $grid-cols-rows: map-merge(
+    $grid-cols-rows,
+    (
+      $i: repeat($i, 1fr),
+    )
+  );
+}
+
+@include generate-responsive-classes(
+  "grid-cols",
+  grid-template-columns,
+  $grid-cols-rows
+);
+@include generate-responsive-classes(
+  "grid-rows",
+  grid-template-rows,
+  $grid-cols-rows
+);
+
+// Gap classes
+@include generate-responsive-classes("col-gap", column-gap, $gap-sizes);
+@include generate-responsive-classes("row-gap", row-gap, $gap-sizes);
+@include generate-responsive-classes("grid-gap", gap, $gap-sizes);
+
+// Alignment classes
+@include generate-responsive-classes(
+  "align-items",
+  align-items,
+  $item-alignment-values
+);
+@include generate-responsive-classes(
+  "justify-items",
+  justify-items,
+  $item-alignment-values
+);
+@include generate-responsive-classes(
+  "align-content",
+  align-content,
+  $content-alignment-values
+);
+@include generate-responsive-classes(
+  "justify-content",
+  justify-content,
+  $content-alignment-values
+);
+
+// Grid child classes
+@for $i from 1 through $grid-steps {
+  @include generate-responsive-classes(
+    "col-start",
+    grid-column-start,
+    (
+      $i: $i,
+    )
+  );
+  @include generate-responsive-classes(
+    "row-start",
+    grid-row-start,
+    (
+      $i: $i,
+    )
+  );
+  @include generate-responsive-classes(
+    "col-end",
+    grid-column-end,
+    (
+      $i: $i,
+    )
+  );
+  @include generate-responsive-classes(
+    "row-end",
+    grid-row-end,
+    (
+      $i: $i,
+    )
+  );
+}
+
+@include generate-responsive-classes(
+  "align-self",
+  align-self,
+  $item-alignment-values
+);
+@include generate-responsive-classes(
+  "justify-self",
+  justify-self,
+  $item-alignment-values
+);
