@@ -1,6 +1,6 @@
 # Custom Grid System
 
-This grid system is a customizable, mobile-first, responsive CSS grid utility built with SCSS.
+This grid module is a customizable, mobile-first, responsive CSS grid utility built with SCSS.
 
 ## Grid Container Classes
 

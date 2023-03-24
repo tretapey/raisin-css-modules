@@ -1,0 +1,118 @@
+// Configurable variables
+$flex-directions: (
+  "row": row,
+  "row-reverse": row-reverse,
+  "column": column,
+  "column-reverse": column-reverse,
+);
+$item-alignment-values: (
+  "start": start,
+  "end": end,
+  "center": center,
+  "baseline": baseline,
+  "stretch": stretch,
+);
+$content-alignment-values: (
+  "start": start,
+  "end": end,
+  "center": center,
+  "between": space-between,
+  "around": space-around,
+  "evenly": space-evenly,
+);
+$breakpoints: (
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+);
+
+// Mixin for generating responsive classes
+@mixin generate-responsive-classes($class-name, $property, $values) {
+  @each $value-name, $value in $values {
+    .#{$class-name}-#{$value-name} {
+      #{$property}: $value;
+    }
+
+    @each $bp-name, $bp-value in $breakpoints {
+      @media screen and (min-width: $bp-value) {
+        .#{$class-name}-#{$value-name}\@#{$bp-name} {
+          #{$property}: $value;
+        }
+      }
+    }
+  }
+}
+
+// Flex container classes
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+// Flex direction classes
+@include generate-responsive-classes("flex", flex-direction, $flex-directions);
+
+// Item alignment classes
+@include generate-responsive-classes(
+  "align-items",
+  align-items,
+  $item-alignment-values
+);
+@include generate-responsive-classes(
+  "justify-items",
+  justify-content,
+  $item-alignment-values
+);
+
+// Content alignment classes
+@include generate-responsive-classes(
+  "align-content",
+  align-content,
+  $content-alignment-values
+);
+@include generate-responsive-classes(
+  "justify-content",
+  justify-content,
+  $content-alignment-values
+);
+
+// Flex child classes
+@include generate-responsive-classes(
+  "align-self",
+  align-self,
+  $item-alignment-values
+);
+@include generate-responsive-classes(
+  "justify-self",
+  justify-self,
+  $item-alignment-values
+);
+
+// Flex grow, shrink and basis classes
+@for $i from 0 through 12 {
+  @include generate-responsive-classes(
+    "grow",
+    flex-grow,
+    (
+      $i: $i,
+    )
+  );
+  @include generate-responsive-classes(
+    "shrink",
+    flex-shrink,
+    (
+      $i: $i,
+    )
+  );
+  @include generate-responsive-classes(
+    "basis",
+    flex-basis,
+    (
+      $i: percentage($i / 12),
+    )
+  );
+}
